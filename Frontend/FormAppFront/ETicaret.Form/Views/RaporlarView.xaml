@@ -1,0 +1,160 @@
+﻿<UserControl x:Class="ETicaret.UI.Views.RaporlarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:ETicaret.UI.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="1000"
+             FontFamily="Segoe UI" FontSize="14">
+
+    <UserControl.DataContext>
+        <vm:RaporlarViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="PrimaryBlue" Color="#3B82F6"/>
+        <SolidColorBrush x:Key="BackgroundLight" Color="#F0F9FF"/>
+        <SolidColorBrush x:Key="SurfaceWhite" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextDark" Color="#1E293B"/>
+        <SolidColorBrush x:Key="TextLight" Color="#64748B"/>
+        <SolidColorBrush x:Key="AccentGreen" Color="#10B981"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#E2E8F0"/>
+
+        <Style TargetType="Button" x:Key="ModernButton">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource PrimaryBlue}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="RowHeight" Value="50"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="AlternatingRowBackground" Value="#F8FAFC"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Foreground" Value="{StaticResource PrimaryBlue}"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Height" Value="45"/>
+                        <Setter Property="Padding" Value="15,0"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                        <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="15,0"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="DataGridCell">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ContentPresenter VerticalAlignment="Center" Margin="15,0"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{StaticResource BackgroundLight}"/>
+                                <Setter Property="Foreground" Value="{StaticResource PrimaryBlue}"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#F1F5F9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Margin="25,25,25,15" Background="{StaticResource SurfaceWhite}" CornerRadius="16">
+            <Border.Effect>
+                <DropShadowEffect Color="#94A3B8" BlurRadius="25" ShadowDepth="0" Opacity="0.15"/>
+            </Border.Effect>
+
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="{StaticResource BackgroundLight}" Width="45" Height="45" CornerRadius="10">
+                        <TextBlock Text="📊" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                    </Border>
+                    <StackPanel Margin="15,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="Ürün &amp; Stok Raporu" FontSize="20" FontWeight="Bold" Foreground="{StaticResource TextDark}"/>
+                        <TextBlock Text="Stok durumu ve mali analiz" FontSize="13" Foreground="{StaticResource TextLight}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button Grid.Column="1" Command="{Binding LoadRaporCommand}" Style="{StaticResource ModernButton}" 
+                        Background="White" Foreground="{StaticResource PrimaryBlue}" BorderBrush="{StaticResource PrimaryBlue}" BorderThickness="1"
+                        Width="140">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🔄" Margin="0,0,8,0"/>
+                        <TextBlock Text="Yenile"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Grid.Column="3" Command="{Binding RaporYazdirCommand}" Style="{StaticResource ModernButton}" 
+                        Content="🖨️ Yazdır / Önizle" Width="160" Background="{StaticResource PrimaryBlue}"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Margin="25,0,25,25" Background="{StaticResource SurfaceWhite}" CornerRadius="16" Padding="5">
+            <Border.Effect>
+                <DropShadowEffect Color="#94A3B8" BlurRadius="25" ShadowDepth="0" Opacity="0.15"/>
+            </Border.Effect>
+
+            <DataGrid ItemsSource="{Binding RaporListesi}" IsReadOnly="True" BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ÜRÜN ADI" Binding="{Binding UrunAdi}" Width="*"/>
+                    <DataGridTextColumn Header="KATEGORİ" Binding="{Binding Kategori}" Width="150"/>
+                    <DataGridTextColumn Header="SATICI" Binding="{Binding SaticiAdi}" Width="150"/>
+                    <DataGridTextColumn Header="STOK" Binding="{Binding StokAdedi}" Width="100" FontWeight="Bold"/>
+                    <DataGridTextColumn Header="BİRİM FİYAT" Binding="{Binding FiyatFormatli}" Width="120"/>
+                    <DataGridTextColumn Header="TOPLAM DEĞER" Binding="{Binding ToplamDegerFormatli}" Width="160" FontWeight="ExtraBold" Foreground="{StaticResource AccentGreen}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

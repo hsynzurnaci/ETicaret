@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="ETicaret.UI.Views.OzelRaporView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:ETicaret.UI.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="900">
+
+    <UserControl.DataContext>
+        <vm:OzelRaporViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Margin="20" Background="#F8FAFC">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Özel SQL Raporlayıcı" FontSize="24" FontWeight="Bold" Foreground="#334155" Margin="0,0,0,10"/>
+
+        <Border Grid.Row="1" Background="White" CornerRadius="8" BorderBrush="#CBD5E1" BorderThickness="1">
+            <TextBox Text="{Binding SqlSorgusu}"
+                     AcceptsReturn="True"
+                     FontFamily="Consolas" FontSize="14"
+                     VerticalScrollBarVisibility="Auto"
+                     Padding="10" BorderThickness="0"/>
+        </Border>
+
+        <Button Grid.Row="2" Command="{Binding SorguyuCalistirCommand}"
+                Content="▶ Sorguyu Çalıştır"
+                HorizontalAlignment="Right" Margin="0,10,0,10"
+                Background="#2563EB" Foreground="White" FontWeight="Bold" Padding="20,10"
+                Cursor="Hand">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="6"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <DataGrid Grid.Row="3" ItemsSource="{Binding RaporSonucu}"
+                  AutoGenerateColumns="True"
+                  IsReadOnly="True"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="All"
+                  Background="White"
+                  RowHeaderWidth="0">
+        </DataGrid>
+    </Grid>
+</UserControl>

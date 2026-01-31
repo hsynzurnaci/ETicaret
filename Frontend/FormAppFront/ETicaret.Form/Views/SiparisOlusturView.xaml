@@ -1,0 +1,149 @@
+﻿<UserControl x:Class="ETicaret.UI.Views.SiparisOlusturView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ETicaret.UI.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="900">
+
+    <UserControl.DataContext>
+        <vm:SiparisOlusturViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Background="#F5F6FA" Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="Control" x:Key="InputStyle">
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="5,0"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderBrush" Value="#D0D3D4"/>
+            </Style>
+        </Grid.Resources>
+
+        <Border Grid.Column="0" Background="White" CornerRadius="10" Padding="20">
+            <Border.Effect>
+                <DropShadowEffect Color="#EAEDED" BlurRadius="15" ShadowDepth="5" Opacity="0.5"/>
+            </Border.Effect>
+
+            <StackPanel>
+                <TextBlock Text="📦 Ürün Ekle" FontSize="18" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Müşteri ID" Foreground="#566573" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                <TextBox Style="{StaticResource InputStyle}" Text="{Binding MusteriId}" Margin="0,0,0,15"/>
+
+                <Grid Margin="0,0,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Ürün Seç" Foreground="#566573" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                    <Button Grid.Column="1" Command="{Binding LoadUrunlerCommand}" 
+                            Content="🔄 Listeyi Yenile" 
+                            FontSize="11" Padding="8,2" Background="#ECF0F1" Foreground="#2C3E50" BorderThickness="0" Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+
+                <ComboBox Style="{StaticResource InputStyle}" 
+                          ItemsSource="{Binding UrunListesi}" 
+                          SelectedItem="{Binding SecilenUrun}"
+                          DisplayMemberPath="UrunAdi"
+                          Margin="0,0,0,15"/>
+
+                <TextBlock Text="Adet / Miktar" Foreground="#566573" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                <TextBox Style="{StaticResource InputStyle}" Text="{Binding Miktar}" Margin="0,0,0,20"/>
+
+                <Button Command="{Binding SepeteEkleCommand}" Content="Sepete Ekle 🛒" 
+                        Height="40" Cursor="Hand"
+                        Background="#3498DB" Foreground="White"  
+                        FontSize="14" FontWeight="Bold" BorderThickness="0">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="2" Background="White" CornerRadius="10" Padding="20">
+            <Border.Effect>
+                <DropShadowEffect Color="#EAEDED" BlurRadius="15" ShadowDepth="5" Opacity="0.5"/>
+            </Border.Effect>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <TextBlock Text=" Sepetiniz" FontSize="18" FontWeight="Bold" Foreground="#2C3E50"/>
+                    <TextBlock Text="(Sipariş Özeti)" FontSize="12" Foreground="#95A5A6" VerticalAlignment="Bottom" Margin="10,0,0,2"/>
+                </StackPanel>
+
+                <Button HorizontalAlignment="Right" Command="{Binding SepetiTemizleCommand}"
+            Content="🗑️ Temizle" Background="#E74C3C" Foreground="White"
+            Padding="10,5" BorderThickness="0" Cursor="Hand" FontWeight="Bold">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Sepet}" 
+                          AutoGenerateColumns="False" IsReadOnly="True"
+                          Background="White" GridLinesVisibility="Horizontal"
+                          BorderThickness="1" BorderBrush="#ECF0F1" RowHeight="35">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ürün Adı" Binding="{Binding UrunAdi}" Width="*"/>
+                        <DataGridTextColumn Header="Adet" Binding="{Binding Miktar}" Width="60"/>
+                        <DataGridTextColumn Header="Birim Fiyat" Binding="{Binding BirimFiyat, StringFormat={}{0:N2} ₺}" Width="100"/>
+                        <DataGridTextColumn Header="Toplam" Binding="{Binding BirimFiyat, StringFormat={}{0:N2} ₺}" Width="100" FontWeight="Bold"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Grid Grid.Row="2" Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Genel Toplam" Foreground="#95A5A6" FontSize="12"/>
+                        <TextBlock Text="{Binding GenelToplamFormatli}" 
+                                   Foreground="#E74C3C" FontWeight="Bold" FontSize="24"/>
+                    </StackPanel>
+
+                    <Button Grid.Column="1" Command="{Binding SiparisiTamamlaCommand}" 
+                            Content="Siparişi Onayla ✅" 
+                            Height="50" Width="180" Cursor="Hand"
+                            Background="#27AE60" Foreground="White" 
+                            FontSize="15" FontWeight="Bold" BorderThickness="0">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

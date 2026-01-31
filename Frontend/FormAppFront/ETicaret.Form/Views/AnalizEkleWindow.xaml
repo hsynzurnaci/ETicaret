@@ -1,0 +1,86 @@
+﻿<Window x:Class="ETicaret.UI.Views.AnalizEkleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Yeni Piyasa Analizi Gir" Height="480" Width="400"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Background="#F1F5F9" FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="PrimaryBlue" Color="#3B82F6"/>
+        <SolidColorBrush x:Key="TextDark" Color="#1E293B"/>
+        <SolidColorBrush x:Key="TextLight" Color="#64748B"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#E2E8F0"/>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource PrimaryBlue}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource PrimaryBlue}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="White" Margin="20" CornerRadius="12" Padding="25">
+        <Border.Effect>
+            <DropShadowEffect Color="#94A3B8" BlurRadius="20" ShadowDepth="0" Opacity="0.15"/>
+        </Border.Effect>
+
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,25" HorizontalAlignment="Center">
+                <TextBlock Text="📈" FontSize="20" Margin="0,0,10,0"/>
+                <TextBlock Text="Yeni Piyasa Analizi" FontSize="20" FontWeight="Bold" Foreground="{StaticResource TextDark}" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <TextBlock Text="Ekonomik Durum" Foreground="{StaticResource TextLight}" FontSize="13" Margin="0,0,0,6"/>
+            <TextBox x:Name="txtDurum" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Önerilen Yeni Fiyat (TL)" Foreground="{StaticResource TextLight}" FontSize="13" Margin="0,0,0,6"/>
+            <TextBox x:Name="txtFiyat" Margin="0,0,0,15"/>
+
+            <TextBlock Foreground="{StaticResource TextLight}" FontSize="13" Margin="0,0,0,6"><Run Language="tr-tr" Text="Ek (varsa)"/></TextBlock>
+            <TextBox x:Name="txtNotlar" Height="41" VerticalContentAlignment="Top" Padding="10" TextWrapping="Wrap" Margin="0,0,0,25"/>
+            <Button Content="Kaydet ve Uygula" Click="Button_Click"/>
+        </StackPanel>
+    </Border>
+</Window>
